@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:convert/convert.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_nfc_kit/flutter_nfc_kit.dart';
 import 'package:image/image.dart' as img;
 import 'package:magic_epaper_app/util/epd/edp.dart';
@@ -20,12 +21,6 @@ class Protocol {
 
   Future<Uint8List> _writeMsg(Uint8List tagId, Uint8List msg) async {
     return await _transceive(fw.tagChip.writeMsgCmd, tagId, msg);
-  }
-
-  Future<Uint8List> _readMsg(Uint8List tagId) async {
-    // Send 0 will return all message present in the tag's mailbox
-    return await _transceive(
-        fw.tagChip.readMsgDmd, tagId, Uint8List.fromList([0]));
   }
 
   Future<Uint8List> _readDynCfg(Uint8List tagId, int address) async {
@@ -76,13 +71,13 @@ class Protocol {
     await _sleep();
     for (int i = 0; i < chunks.length; i++) {
       Uint8List chunk = chunks[i];
-      print(
+      debugPrint(
           "Writing chunk ${i + 1}/${chunks.length} len ${chunk.lengthInBytes}: ${chunk.map((e) => e.toRadixString(16)).toList()}");
 
       await _writeMsg(id, chunk);
       await wait4msgGathered(id);
     }
-    print("Transferred successfully.");
+    debugPrint("Transferred successfully.");
   }
 
   List<Uint8List> _split({required Uint8List data, int chunkSize = 220}) {
@@ -102,9 +97,9 @@ class Protocol {
       throw "NFC is not available";
     }
 
-    print("Bring your phone near to the Magic Epaper Hardware");
+    debugPrint("Bring your phone near to the Magic Epaper Hardware");
     final tag = await FlutterNfcKit.poll(timeout: timeout);
-    print("Got a tag!");
+    debugPrint("Got a tag!");
 
     var id = Uint8List.fromList(hex.decode(tag.id));
     if (tag.type != NFCTagType.iso15693) {

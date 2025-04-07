@@ -14,7 +14,10 @@ abstract class Epd {
 
   Uint8List _extractEpaperColorFrame(Color color, img.Image orgImage) {
     final image = ImageProcessing.extract(color, orgImage);
-    final colorPixel = img.ColorRgb8(color.red, color.green, color.blue);
+    final red = (color.r * 255).toInt();
+    final green = (color.g * 255).toInt();
+    final blue = (color.b * 255).toInt();
+    final colorPixel = img.ColorRgb8(red, green, blue);
     List<int> bytes = List.empty(growable: true);
     int j = 0;
     int byte = 0;

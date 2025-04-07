@@ -14,7 +14,8 @@ class ExtractQuantizer extends img.Quantizer {
     this.sThres = 0.5,
     this.vThres = 0.5,
   }) : _palette = img.PaletteUint8(2, 3) {
-    _palette.setRgb(0, toBeExtract.red, toBeExtract.green, toBeExtract.blue);
+    _palette.setRgb(0, (toBeExtract.r * 255).toInt(),
+        (toBeExtract.g * 255).toInt(), (toBeExtract.b * 255).toInt());
     _palette.setRgb(1, 255, 255, 255);
     _toBeExtract = HSVColor.fromColor(toBeExtract);
   }
