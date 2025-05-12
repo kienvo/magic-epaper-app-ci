@@ -61,7 +61,7 @@ jobs:
 
           # Force push to version branch
           git checkout --orphan temporary
-          git add --all .
+          git add magic-epaper*.apk magic-epaper*.aab
           git commit -am "[Auto] Update versionName: $next_version_name & versionCode: $new_version_code ($(date +%Y-%m-%d.%H:%M:%S))"
           git branch -D version
           git branch -m version
