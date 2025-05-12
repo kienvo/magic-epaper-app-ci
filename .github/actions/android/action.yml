@@ -47,6 +47,7 @@ runs:
         VERSION_NAME: ${{inputs.VERSION_NAME}}
         VERSION_CODE: ${{inputs.VERSION_CODE}}
       run: |
+        flutter clean
         flutter build apk --debug --build-name $VERSION_NAME --build-number $VERSION_CODE
         flutter build apk --build-name $VERSION_NAME --build-number $VERSION_CODE
         flutter build appbundle --build-name $VERSION_NAME --build-number $VERSION_CODE
