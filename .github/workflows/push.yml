@@ -127,6 +127,7 @@ jobs:
           echo "Pushing to apk branch"
 
           git checkout --orphan temporary
+          git reset
           git add magic-epaper*.apk magic-epaper*.aab
           git commit -am "[Auto] Update APK/AAB's from $branch ($(date +%Y-%m-%d.%H:%M:%S))"
           git branch -D apk
